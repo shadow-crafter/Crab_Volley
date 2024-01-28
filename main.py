@@ -1,5 +1,5 @@
 import pygame, sys
-from src.bodies import Physics_Body
+from src.bodies import Physics_Body, Player
 from src.util import load_image
 
 class Game:
@@ -13,12 +13,15 @@ class Game:
         self.clock = pygame.time.Clock()
         
         self.assets = {
-            'player': load_image("Player.png"),
+            'player': load_image("player.png"),
+            'volley_ball': load_image("volley_ball.png"),
         }
 
         self.player = Physics_Body(self, (160 - 16, 120), (16, 16), self.assets['player'])
         self.movement_dir = [False, False]
         self.move_speed = 2
+        
+        self.volley_ball = Physics_Body(self, (160 - 16, 0), (16, 16), self.assets['volley_ball'], term_vel=3)
     
     def run(self):
         while True:
@@ -26,6 +29,9 @@ class Game:
             
             self.player.update(((self.movement_dir[1] - self.movement_dir[0]) * self.move_speed, 0))
             self.player.render(self.display)
+
+            self.volley_ball.update((0, 1))
+            self.volley_ball.render(self.display)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

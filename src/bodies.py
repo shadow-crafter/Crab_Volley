@@ -21,3 +21,7 @@ class Physics_Body:
 
     def render(self, surface: pygame.Surface):
         surface.blit(self.img, (self.position[0], self.position[1]))
+
+class Player(Physics_Body): #fer later
+    def __init__(self, game, position, size):
+        super().__init__(game, position, size, game.assets['player'])
